@@ -7,25 +7,19 @@ function Home() {
   function getProducts() {
     axios
       .get("https://e-commerce2-friz.onrender.com/user/products", {
-        headers: {
-          athorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        withCredentials: true, // allows sending cookies or credentials
       })
-      .then((res) => {
-        setProducts(res.data.products);
+      .then((response) => {
+        console.log(response.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error("Error:", error);
       });
   }
   useEffect(() => {
     getProducts();
   }, []);
-  return (
-    <main className="w-full h-screen text-white bg-black">
-      
-    </main>
-  );
+  return <main className="w-full h-screen text-white bg-black"></main>;
 }
 
 export default Home;
