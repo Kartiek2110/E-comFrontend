@@ -6,52 +6,29 @@ import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const navigate = useNavigate();
 
-  // Handle Form Submission
-  function handleFormSubmit(event) {
-    event.preventDefault();
+  function handleFormSubmit (event) {
+    
+    event.preventDefault()
+    
 
-    const email = event.target.email.value;
-    const username = event.target.username.value;
-    const password = event.target.password.value;
+    const email = event.target.email.value
+    const username = event.target.username.value
+    const password = event.target.password.value
 
-    // Post request to your signup API
-    axios
-      .post(
-        "https://e-commerce2-friz.onrender.com/user/signup", // Check this URL for correctness
-        {
-          email,
-          username,
-          password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true, // Add this if your API requires credentials or cookies
-        }
-      )
-      .then((res) => {
-        const data = res.data;
-        if (data.token) {
-          // Save token in localStorage
-          localStorage.setItem("token", data.token);
-          // Navigate to home page
-          navigate("/");
-        } else {
-          // Handle unexpected API response
-          console.log("No token received from server");
-        }
-      })
-      .catch((err) => {
-        // Check for different error cases
-        if (err.response) {
-          console.log("Error response:", err.response.data); // Server responded with a status code out of the 2xx range
-        } else if (err.request) {
-          console.log("No response received from the server:", err.request); // Request was made but no response received
-        } else {
-          console.log("Error during setup:", err.message); // Something happened during setting up the request
-        }
-      });
+    axios.post("https://e-commerce2-friz.onrender.com/user/signup", {
+      
+      email,
+      username,
+      password
+    }).then((res) => {
+      const data = res.data
+      localStorage.setItem("token", data.token)
+      navigate("/")
+    }).catch((err) => {
+      console.log(err);
+    })
+
+    
   }
 
   return (
@@ -90,12 +67,12 @@ const Signup = () => {
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />
-        <button
-          type="submit"
-          className="mt-4 w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-300"
-        >
-          Sign Up
-        </button>
+      <button
+        type="submit"
+        className="mt-4 w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-300"
+      >
+        Sign Up
+      </button>
       </form>
       <Link
         to="/"
